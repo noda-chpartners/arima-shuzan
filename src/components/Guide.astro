@@ -1,0 +1,196 @@
+---
+import { Icon } from 'astro-icon/components';
+import { faqs } from '../data/site';
+
+const days = [
+  { label: '月', open: true },
+  { label: '火', open: true },
+  { label: '水', open: false },
+  { label: '木', open: true },
+  { label: '金', open: false },
+  { label: '土', open: false },
+  { label: '日', open: false },
+];
+
+const factIcons = [
+  'lucide:calendar-days',
+  'lucide:clock-3',
+  'lucide:smile',
+  'lucide:map-pin',
+] as const;
+---
+
+<section class="section guide" id="guide">
+  <div class="wrap">
+    <div class="head" data-fade>
+      <p class="chip">
+        <Icon name="lucide:calendar-days" />
+        通い方
+      </p>
+      <h2 class="section-title">ご家庭のペースで続けられます</h2>
+      <p class="lead">週1回から。開塾時間のなかで、通う曜日と時間をご相談ください。</p>
+    </div>
+
+    <div class="panel" data-fade>
+      <div class="timetable">
+        <p class="label">
+          <Icon name="lucide:clock-3" />
+          開塾時間 <time datetime="15:00">15:00</time> 〜 <time datetime="19:00">19:00</time>
+        </p>
+        <div class="grid" role="table" aria-label="開塾曜日">
+          <div class="row head-row" role="row">
+            <span></span>
+            {days.map((day) => <span class={day.open ? 'on' : undefined}>{day.label}</span>)}
+          </div>
+          <div class="row" role="row">
+            <span class="time">15-19時</span>
+            {
+              days.map((day) => (
+                <span class={day.open ? 'bar' : 'empty'} aria-hidden="true" />
+              ))
+            }
+          </div>
+        </div>
+        <p class="note">月・火・木が開塾日です。空いている時間帯をご相談のうえ、通塾時間を決めます。</p>
+      </div>
+
+      <ul class="facts" data-stagger>
+        {
+          faqs.map((fact, index) => (
+            <li>
+              <Icon name={factIcons[index]} />
+              <div>
+                <h3>{fact.question}</h3>
+                <p>{fact.answer}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .head {
+    display: grid;
+    gap: 0.8rem;
+    margin-bottom: 1.8rem;
+  }
+
+  .panel {
+    display: grid;
+    gap: 1.2rem;
+  }
+
+  .timetable {
+    padding: 1.5rem 1.3rem 1.4rem;
+    background: #fff7df;
+    border-radius: 1.8rem;
+    box-shadow: var(--shadow);
+  }
+
+  .label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    color: #8a6200;
+  }
+
+  .label :global(svg) {
+    width: 1.1em;
+    height: 1.1em;
+  }
+
+  .grid {
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 4.2rem repeat(7, 1fr);
+    gap: 0.3rem;
+    align-items: stretch;
+  }
+
+  .row span {
+    display: grid;
+    place-items: center;
+    min-height: 2.2rem;
+    border-radius: 0.7rem;
+    background: rgba(255, 255, 255, 0.7);
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  .head-row .on {
+    background: var(--sky);
+    color: var(--white);
+  }
+
+  .time {
+    font-size: 0.75rem !important;
+    color: var(--ink-soft);
+  }
+
+  .bar {
+    background: linear-gradient(90deg, #7ed8a4, #3ba3c7) !important;
+  }
+
+  .empty {
+    background: rgba(255, 255, 255, 0.35) !important;
+  }
+
+  .note {
+    margin-top: 0.9rem;
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+  }
+
+  .facts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .facts li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.8rem;
+    padding: 1.05rem 1rem;
+    background: var(--white);
+    border-radius: 1.3rem;
+    box-shadow: var(--shadow);
+  }
+
+  .facts :global(svg) {
+    width: 1.3rem;
+    height: 1.3rem;
+    color: var(--sky);
+    margin-top: 0.15rem;
+  }
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.15rem;
+  }
+
+  .facts p {
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 820px) {
+    .facts {
+      grid-template-columns: 1fr;
+    }
+
+    .row {
+      grid-template-columns: 3.4rem repeat(7, 1fr);
+    }
+  }
+</style>

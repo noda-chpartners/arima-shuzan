@@ -1,0 +1,45 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { site } from '../data/site';
+---
+
+<Layout title={`ページが見つかりません｜${site.name}`} noindex>
+  <main class="missing" id="main">
+    <p>404</p>
+    <h1>ページが見つかりません</h1>
+    <p>お探しのページは移動したか、削除された可能性があります。</p>
+    <a href="/">トップページへ戻る</a>
+  </main>
+</Layout>
+
+<style>
+  .missing {
+    min-height: 100svh;
+    display: grid;
+    place-content: center;
+    text-align: center;
+    gap: 0.8rem;
+    padding: 2rem;
+  }
+
+  .missing p:first-child {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--sky);
+    line-height: 1;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  a {
+    display: inline-flex;
+    margin: 0.6rem auto 0;
+    padding: 0.7rem 1.3rem;
+    border-radius: 999px;
+    background: var(--peach);
+    color: var(--white);
+    font-weight: 700;
+  }
+</style>

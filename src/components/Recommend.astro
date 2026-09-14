@@ -1,0 +1,186 @@
+---
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import desk from '../assets/images/desk-still.jpg';
+
+const points = [
+  {
+    icon: 'lucide:calculator',
+    title: '計算が得意になりたい',
+    text: '数字に慣れて、算数の土台をしっかり築きたいお子さまへ。',
+  },
+  {
+    icon: 'lucide:target',
+    title: '集中力を身につけたい',
+    text: '机に向かう時間が短い、気が散りやすいと感じているご家庭へ。',
+  },
+  {
+    icon: 'lucide:award',
+    title: '勉強に自信をつけたい',
+    text: '小さな成功体験を重ねて、「自分にもできる」を増やしたいお子さまへ。',
+  },
+  {
+    icon: 'lucide:smile',
+    title: '楽しく学べる習い事を始めたい',
+    text: '初めての習い事でも大丈夫。そろばん未経験のお子さまも大歓迎です。',
+  },
+];
+---
+
+<section class="section recommend" id="recommend">
+  <div class="wrap">
+    <div class="head" data-fade>
+      <p class="chip">
+        <Icon name="lucide:users" />
+        こんな子に
+      </p>
+      <h2 class="section-title">こんなお子さまにおすすめです</h2>
+    </div>
+
+    <div class="layout">
+      <ol class="list" data-stagger>
+        {
+          points.map((point) => (
+            <li>
+              <span class="icon" aria-hidden="true">
+                <Icon name={point.icon} />
+              </span>
+              <div>
+                <h3>{point.title}</h3>
+                <p>{point.text}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+
+      <aside class="note" data-fade>
+        <div class="photo">
+          <Image
+            src={desk}
+            alt="有馬珠算塾の机に置かれたそろばんと練習プリント"
+            widths={[400, 720, 1080]}
+            sizes="(max-width: 820px) 100vw, 38vw"
+            quality={75}
+          />
+        </div>
+        <blockquote>
+          <p>できなかったが、<strong>できた！</strong>に変わる。</p>
+          <span>小さな成功体験を積み重ねながら、一人ひとりの成長をサポートします。</span>
+        </blockquote>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<style>
+  .head {
+    display: grid;
+    gap: 0.8rem;
+    margin-bottom: 1.8rem;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 1.2rem;
+    align-items: stretch;
+  }
+
+  .list {
+    display: grid;
+    gap: 0.7rem;
+  }
+
+  .list li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.85rem;
+    align-items: center;
+    min-height: 5.4rem;
+    padding: 1rem 1.15rem;
+    background: var(--white);
+    border-radius: 1.4rem;
+    box-shadow: 0 10px 24px -20px rgba(43, 134, 166, 0.7);
+  }
+
+  .list li:nth-child(1) .icon { background: var(--sky-soft); color: var(--sky-deep); }
+  .list li:nth-child(2) .icon { background: var(--peach-soft); color: var(--peach); }
+  .list li:nth-child(3) .icon { background: var(--lemon); color: #8a6200; }
+  .list li:nth-child(4) .icon { background: var(--mint-soft); color: #2c7a4f; }
+
+  .icon {
+    display: grid;
+    place-items: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 0.85rem;
+  }
+
+  .icon :global(svg) {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+
+  h3 {
+    font-size: 1.02rem;
+    font-weight: 700;
+    margin-bottom: 0.15rem;
+  }
+
+  .list p {
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+  }
+
+  .note {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    overflow: hidden;
+    border-radius: 1.8rem;
+    background: var(--peach);
+    color: var(--white);
+  }
+
+  .note .photo {
+    border-radius: 0;
+    box-shadow: none;
+    min-height: 12rem;
+  }
+
+  blockquote {
+    margin: 0;
+    padding: 1.3rem 1.25rem 1.4rem;
+  }
+
+  blockquote p {
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.6;
+    margin-bottom: 0.55rem;
+  }
+
+  blockquote strong {
+    background: var(--white);
+    color: var(--peach);
+    padding: 0.05em 0.28em;
+    border-radius: 0.35em;
+  }
+
+  blockquote span {
+    display: block;
+    font-size: 0.9rem;
+    line-height: 1.75;
+    opacity: 0.92;
+  }
+
+  @media (max-width: 820px) {
+    .layout {
+      grid-template-columns: 1fr;
+    }
+
+    .list li {
+      min-height: 0;
+    }
+  }
+</style>

@@ -1,0 +1,152 @@
+---
+import '../styles/global.css';
+import { Icon } from 'astro-icon/components';
+import { faqs, mapUrl, site } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+}
+
+const title = Astro.props.title ?? site.title;
+const description = Astro.props.description ?? site.description;
+const noindex = Astro.props.noindex ?? false;
+
+const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
+const ogImage = new URL(site.ogImagePath, canonical);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': ['EducationalOrganization', 'LocalBusiness'],
+      '@id': `${canonical.origin}/#organization`,
+      name: site.name,
+      alternateName: 'ありま珠算塾',
+      description,
+      url: canonical.origin + '/',
+      telephone: site.telephoneIntl,
+      image: ogImage.href,
+      logo: new URL('/apple-touch-icon.png', canonical).href,
+      slogan: site.tagline,
+      foundingDate: site.foundingYear,
+      currenciesAccepted: 'JPY',
+      address: {
+        '@type': 'PostalAddress',
+        postalCode: site.postalCode,
+        addressRegion: site.addressRegion,
+        addressLocality: site.addressLocality,
+        streetAddress: site.streetAddress,
+        addressCountry: 'JP',
+      },
+      hasMap: mapUrl,
+      areaServed: [
+        { '@type': 'AdministrativeArea', name: '川崎市宮前区' },
+        { '@type': 'AdministrativeArea', name: '川崎市' },
+      ],
+      knowsAbout: ['そろばん', '珠算', '暗算', 'そろばん教室'],
+      audience: {
+        '@type': 'EducationalAudience',
+        educationalRole: 'student',
+        audienceType: '子ども',
+      },
+      openingHoursSpecification: [
+        {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: ['Monday', 'Tuesday', 'Thursday'],
+          opens: site.opens,
+          closes: site.closes,
+        },
+      ],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${canonical.origin}/#website`,
+      name: site.name,
+      url: canonical.origin + '/',
+      inLanguage: 'ja',
+      publisher: { '@id': `${canonical.origin}/#organization` },
+    },
+    {
+      '@type': 'WebPage',
+      '@id': `${canonical.href}#webpage`,
+      url: canonical.href,
+      name: title,
+      description,
+      inLanguage: 'ja',
+      isPartOf: { '@id': `${canonical.origin}/#website` },
+      about: { '@id': `${canonical.origin}/#organization` },
+      primaryImageOfPage: ogImage.href,
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': `${canonical.href}#faq`,
+      mainEntity: faqs.map((item) => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: item.answer,
+        },
+      })),
+    },
+  ],
+};
+
+const fontHref =
+  'https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap';
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
+    <meta name="author" content={site.name} />
+    <meta name="geo.region" content="JP-14" />
+    <meta name="geo.placename" content="川崎市宮前区有馬" />
+    <meta name="format-detection" content="telephone=yes" />
+    <link rel="canonical" href={canonical.href} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#3ba3c7" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content={site.locale} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical.href} />
+    <meta property="og:image" content={ogImage.href} />
+    <meta property="og:image:alt" content={site.ogImageAlt} />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content={String(site.ogImageWidth)} />
+    <meta property="og:image:height" content={String(site.ogImageHeight)} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage.href} />
+    <meta name="twitter:image:alt" content={site.ogImageAlt} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="style" href={fontHref} />
+    <link rel="stylesheet" href={fontHref} />
+    {!noindex && (
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    )}
+  </head>
+  <body>
+    <a class="skip-link" href="#main">本文へスキップ</a>
+    <slot />
+    <a class="sp-tel" href={`tel:${site.telephoneTel}`} aria-label={`${site.name}に電話する ${site.telephone}`}>
+      <Icon name="lucide:phone" />
+      電話する {site.telephone}
+    </a>
+    <script>
+      import '../scripts/init.ts';
+    </script>
+  </body>
+</html>

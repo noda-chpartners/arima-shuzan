@@ -1,0 +1,47 @@
+---
+import { site } from '../data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="wrap inner">
+    <address>
+      <p class="brand">{site.name}</p>
+      <p>〒{site.postalCode} {site.addressFull}</p>
+      <p>
+        TEL <a href={`tel:${site.telephoneTel}`}>{site.telephone}</a>
+      </p>
+    </address>
+    <p class="copy">&copy; {year} {site.name}</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding: 1.8rem 0 2rem;
+    background: var(--white);
+    color: var(--ink-soft);
+    font-size: 0.88rem;
+  }
+
+  .inner {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: end;
+    flex-wrap: wrap;
+  }
+
+  .brand {
+    color: var(--ink);
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+    font-style: normal;
+  }
+
+  address {
+    font-style: normal;
+  }
+</style>

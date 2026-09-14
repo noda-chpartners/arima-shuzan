@@ -1,0 +1,206 @@
+---
+import { Icon } from 'astro-icon/components';
+import { site } from '../data/site';
+
+const links = [
+  { href: '#about', label: '教室のこと' },
+  { href: '#recommend', label: 'こんな子に' },
+  { href: '#guide', label: '通い方' },
+  { href: '#access', label: '場所' },
+  { href: '#contact', label: '体験' },
+];
+---
+
+<header class="header" data-header data-scrolled="false">
+  <div class="inner">
+    <a class="logo" href="#top" aria-label="有馬珠算塾 トップ">
+      <span class="mark" aria-hidden="true"><Icon name="logo" /></span>
+      <span>
+        <small>そろばん教室</small>
+        <strong>有馬珠算塾</strong>
+      </span>
+    </a>
+
+    <nav class="nav" aria-label="ページ内メニュー">
+      {links.map((link) => <a href={link.href}>{link.label}</a>)}
+    </nav>
+
+    <a class="tel" href={`tel:${site.telephoneTel}`} aria-label={`${site.name}に電話する ${site.telephone}`}>
+      <Icon name="lucide:phone" />
+      <span>{site.telephone}</span>
+    </a>
+
+    <button
+      class="menu-btn"
+      type="button"
+      data-menu-btn
+      aria-expanded="false"
+      aria-controls="sp-menu"
+      aria-label="メニューを開く"
+    >
+      <Icon name="lucide:menu" class="icon-open" />
+      <Icon name="lucide:x" class="icon-close" />
+    </button>
+  </div>
+
+  <nav class="sp" id="sp-menu" data-menu data-open="false" aria-label="モバイルメニュー">
+    {links.map((link) => <a href={link.href}>{link.label}</a>)}
+    <a class="btn btn-primary" href={`tel:${site.telephoneTel}`}>
+      <Icon name="lucide:phone" />
+      {site.telephone}
+    </a>
+  </nav>
+</header>
+
+<style>
+  .header {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 80;
+    background: rgba(247, 251, 255, 0.88);
+    backdrop-filter: blur(14px);
+    transition: box-shadow 0.3s var(--ease);
+  }
+
+  .header[data-scrolled='true'] {
+    box-shadow: 0 8px 24px -20px rgba(43, 134, 166, 0.8);
+  }
+
+  .inner {
+    width: min(1120px, calc(100% - 1.5rem));
+    min-height: var(--header-h);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin-right: auto;
+  }
+
+  .mark {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.9rem;
+    background: var(--sky-soft);
+    color: var(--sky);
+  }
+
+  .mark :global(svg) {
+    width: 1.45rem;
+    height: 1.45rem;
+  }
+
+  .logo small {
+    display: block;
+    font-size: 0.68rem;
+    color: var(--ink-soft);
+    line-height: 1.2;
+  }
+
+  .logo strong {
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+
+  .nav {
+    display: flex;
+    gap: 0.25rem;
+  }
+
+  .nav a {
+    padding: 0.4rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.86rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .nav a:hover {
+    background: var(--sky-soft);
+    color: var(--sky-deep);
+  }
+
+  .tel {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 0.95rem;
+    border-radius: 999px;
+    background: var(--peach);
+    color: var(--white);
+    font-size: 0.88rem;
+    font-weight: 700;
+  }
+
+  .tel :global(svg) {
+    width: 1em;
+    height: 1em;
+  }
+
+  .menu-btn {
+    display: none;
+    width: 2.6rem;
+    height: 2.6rem;
+    place-items: center;
+    border-radius: 0.85rem;
+    background: var(--white);
+    box-shadow: 0 6px 16px -12px rgba(43, 134, 166, 0.8);
+  }
+
+  .menu-btn :global(svg) {
+    width: 1.45rem;
+    height: 1.45rem;
+  }
+
+  .menu-btn .icon-close,
+  .header:has(.sp[data-open='true']) .icon-open {
+    display: none;
+  }
+
+  .header:has(.sp[data-open='true']) .icon-close {
+    display: block;
+  }
+
+  .sp {
+    display: none;
+  }
+
+  @media (max-width: 1020px) {
+    .nav,
+    .tel {
+      display: none;
+    }
+
+    .menu-btn {
+      display: grid;
+    }
+
+    .sp {
+      display: grid;
+      gap: 0.2rem;
+      padding: 0.6rem 1.1rem 1.3rem;
+      background: rgba(255, 255, 255, 0.98);
+    }
+
+    .sp[data-open='false'] {
+      display: none;
+    }
+
+    .sp a:not(.btn) {
+      padding: 0.85rem 0.2rem;
+      font-weight: 700;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .sp .btn {
+      margin-top: 0.8rem;
+    }
+  }
+</style>
