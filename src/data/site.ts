@@ -16,6 +16,7 @@ export const site = {
   streetAddress: '有馬3-9-8',
   addressFull: '神奈川県川崎市宮前区有馬3-9-8',
   station: '田園都市線「宮前平駅」徒歩18分',
+  additionalStation: '田園都市線「鷺沼駅」徒歩20分',
   openingDays: '月曜日・火曜日・木曜日',
   openingHours: '15:00～19:00',
   opens: '15:00',
@@ -45,6 +46,10 @@ export const faqs = [
   },
   {
     question: '教室はどこにありますか？',
-    answer: '神奈川県川崎市宮前区有馬3-9-8です。田園都市線「宮前平駅」から徒歩18分です。',
+    answer: '神奈川県川崎市宮前区有馬3-9-8です。マクドナルド246鷺沼店から徒歩3分、有馬病院から徒歩1分です。',
+  },
+  {
+    question: '何歳から入塾できますか？',
+    answer: '年長さんから入塾できます。保護者の方の同伴をお願いいたします。',
   },
 ] as const;

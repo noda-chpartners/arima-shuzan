@@ -1,0 +1,86 @@
+---
+import { Icon } from 'astro-icon/components';
+---
+
+<section class="section principal" id="principal" aria-labelledby="principal-title">
+  <div class="wrap">
+    <div class="letter" data-fade>
+      <div class="head">
+        <p class="chip">
+          <Icon name="lucide:hand-heart" />
+          ごあいさつ
+        </p>
+        <h2 class="section-title" id="principal-title">塾長より</h2>
+      </div>
+
+      <div class="message">
+        <p>
+          初めまして。2代目塾長の土屋幸子です。<br />
+          ホームページをご覧いただき、ありがとうございます。
+        </p>
+        <p>当塾では、自分で考えることを大切にしています。また、間違えてもいいと伝えています。</p>
+        <p>大切なのは、間違えた原因を自分で探り、次からは間違えないようにすることです。</p>
+        <p>私は、脳の発達を促し、計算に強くなるそろばんを通じて、お子様が自分で考え、チャレンジする力を身につけ、成長していけるよう指導しています。</p>
+        <p>どうぞ体験にいらしてください。</p>
+      </div>
+
+      <p class="signature">
+        <span>全国珠算教育連盟認定</span>
+        <strong>珠算教育士　土屋幸子</strong>
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .principal {
+    background: linear-gradient(180deg, transparent, var(--peach-soft) 25%, var(--peach-soft) 75%, transparent);
+  }
+
+  .letter {
+    max-width: 46rem;
+    margin-inline: auto;
+    padding: clamp(1.5rem, 4vw, 3rem);
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  .head {
+    display: grid;
+    justify-items: start;
+    gap: 0.8rem;
+    margin-bottom: 1.8rem;
+  }
+
+  .chip {
+    background: var(--peach-soft);
+    color: var(--ink);
+  }
+
+  .message {
+    display: grid;
+    gap: 1.2rem;
+    color: var(--ink-soft);
+    line-height: 2;
+  }
+
+  .signature {
+    display: grid;
+    gap: 0.25rem;
+    margin-top: 1.8rem;
+    padding-top: 1.2rem;
+    border-top: 1px dashed var(--line);
+    text-align: right;
+  }
+
+  .signature span {
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+  }
+
+  .signature strong {
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+</style>
