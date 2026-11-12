@@ -187,6 +187,8 @@ p {
 
 .chip {
   display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
   align-items: center;
   gap: 0.35rem;
   padding: 0.35rem 0.85rem;

@@ -8,19 +8,28 @@ const pillars = [
     icon: 'lucide:target',
     color: 'sky',
     title: '集中力',
-    text: '珠をはじく手と目が、いまこの一問に集中する力を育てます。落ち着いて勉強する姿勢を身につけてほしいとお考えのご家庭に。',
+    paragraphs: [
+      '珠をはじく手と目が、いまこの一問に集中する力を育てます。',
+      '落ち着いて勉強する姿勢を身につけてほしいとお考えのご家庭に。',
+    ],
   },
   {
     icon: 'lucide:hand-heart',
     color: 'peach',
     title: '忍耐力',
-    text: 'くり返す練習のなかで、最後までやりきる粘り強さが身につきます。検定合格などの目標に向かって、繰り返し練習を積み重ねることも、忍耐力を育てる大切な経験です。',
+    paragraphs: [
+      'くり返す練習のなかで、最後までやりきる粘り強さが身につきます。',
+      '検定合格などの目標に向かって、繰り返し練習を積み重ねることも、忍耐力を育てる大切な経験です。',
+    ],
   },
   {
     icon: 'lucide:sun',
     color: 'lemon',
     title: '自信',
-    text: 'できた瞬間を積み重ねて、学ぶことそのものが好きになっていきます。日々の練習を積み重ね、検定に合格できたときの喜びは大きな自信につながります。子どもたちは、努力を続ければできるようになるという成功体験を通じて、自分の可能性を実感していきます。',
+    paragraphs: [
+      'できた瞬間を積み重ねて、学ぶことそのものが好きになっていきます。',
+      '日々の練習を積み重ね、検定に合格できたときの喜びは大きな自信につながります。子どもたちは、努力を続ければできるようになるという成功体験を通じて、自分の可能性を実感していきます。',
+    ],
   },
 ];
 ---
@@ -32,7 +41,10 @@ const pillars = [
         <Icon name="lucide:sprout" />
         教室のこと
       </p>
-      <h2 class="section-title">そろばん学習を通して、考える力と学ぶ力を伸ばします。</h2>
+      <h2 class="section-title">
+        <span class="title-line">そろばん学習を通して、</span>
+        <span class="title-line"><span class="phrase">考える力と学ぶ力を</span><span class="phrase">伸ばします。</span></span>
+      </h2>
       <p class="lead">
         計算力は算数、数学の基本です。指先と頭を同時に使い、数字を見る・置く・読む体験を重ねるうちに、子どもたちの考える力と学ぶ力が自然と伸びていきます。
       </p>
@@ -42,11 +54,15 @@ const pillars = [
       {
         pillars.map((item) => (
           <li class={item.color}>
-            <span class="icon" aria-hidden="true">
-              <Icon name={item.icon} />
-            </span>
-            <h3>{item.title}</h3>
-            <p>{item.text}</p>
+            <div class="pillar-heading">
+              <span class="icon" aria-hidden="true">
+                <Icon name={item.icon} />
+              </span>
+              <h3>{item.title}</h3>
+            </div>
+            <div class="pillar-copy">
+              {item.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+            </div>
           </li>
         ))
       }
@@ -72,19 +88,47 @@ const pillars = [
 
 <style>
   .about {
+    padding-top: clamp(1.5rem, 3vw, 2.5rem);
     background: linear-gradient(180deg, transparent, var(--mint-soft) 18%, var(--mint-soft) 82%, transparent);
   }
 
   .intro {
     display: grid;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    max-width: 40rem;
+    justify-items: center;
+    gap: 0.85rem;
+    width: 100%;
+    max-width: none;
+    margin-bottom: 1.75rem;
+    text-align: center;
+  }
+
+  .intro .section-title {
+    width: 100%;
+    max-width: none;
+    font-size: clamp(1.7rem, 3.6vw, 2.5rem);
+    text-wrap: initial;
+    line-height: 1.5;
+  }
+
+  .intro .title-line {
+    display: block;
+  }
+
+  .intro .phrase {
+    display: inline-block;
+    white-space: nowrap;
+  }
+
+  .intro .lead {
+    width: 100%;
+    max-width: 48rem;
+    line-height: 1.85;
+    text-align: left;
   }
 
   .pillars {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1rem;
     margin-bottom: 2.2rem;
     align-items: stretch;
@@ -93,10 +137,24 @@ const pillars = [
   .pillars li {
     display: grid;
     align-content: start;
+    min-width: 0;
+    gap: 1rem;
     padding: 1.4rem 1.2rem 1.35rem;
     background: var(--white);
     border-radius: 1.6rem;
     box-shadow: var(--shadow);
+  }
+
+  .pillar-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .pillar-copy {
+    display: grid;
+    gap: 0.8rem;
+    overflow-wrap: anywhere;
   }
 
   .icon {
@@ -104,7 +162,7 @@ const pillars = [
     place-items: center;
     width: 3rem;
     height: 3rem;
-    margin-bottom: 0.9rem;
+    flex-shrink: 0;
     border-radius: 50%;
   }
 
@@ -131,7 +189,7 @@ const pillars = [
   h3 {
     font-size: 1.2rem;
     font-weight: 700;
-    margin-bottom: 0.35rem;
+    margin: 0;
   }
 
   .pillars p {
@@ -160,6 +218,14 @@ const pillars = [
     z-index: 1;
     aspect-ratio: 16 / 9.4;
     rotate: -1.2deg;
+  }
+
+  .scene .photo :global(img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   figcaption {
